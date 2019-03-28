@@ -33,3 +33,15 @@ resource "azurerm_app_service_slot" "mymain" {
   app_service_plan_id = "${azurerm_app_service_plan.mymain.id}"
   app_service_name    = "${azurerm_app_service.mymain.name}"
 }
+
+resource "azurerm_key_vault" "mymain" {
+  name                        = "${var.app_service_name}-keyvault"
+  location                    = "${azurerm_resource_group.mymain.location}"
+  resource_group_name         = "${azurerm_resource_group.mymain.name}"
+  enabled_for_disk_encryption = true
+  tenant_id                   = "Your TenantID"
+
+  sku {
+    name = "standard"
+  }
+}
